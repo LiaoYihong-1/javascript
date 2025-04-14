@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "name": "homework1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "yarn jest",
+    "test:watch": "yarn jest --watchAll",
+    "test:coverage": "yarn jest --coverage"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.js"
+    ]
+  }
+}
