@@ -6,7 +6,7 @@ export default defineConfig({
             name: 'pure-js-html-fallback',
             configureServer(server) {
                 server.middlewares.use((req, res, next) => {
-                    if (req.url === '/') {
+                    if (req.url === '/' || req.url === '/about') {
                         res.setHeader('Content-Type', 'text/html')
                         res.end(`
               <!DOCTYPE html>

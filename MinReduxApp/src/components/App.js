@@ -4,6 +4,7 @@ import { TaskList } from './TaskList';
 import { TaskForm } from './TaskForm';
 import {About} from "./About";
 import {Router} from "../core/Router";
+import {store} from "../store/store";
 
 export class App extends Component {
     constructor() {
@@ -13,7 +14,7 @@ export class App extends Component {
         this.taskForm = new TaskForm();
         this.router = new Router();
         this.about = new About();
-        this.router.addRoute("/",()=>{
+        this.router.addRoute("/",()=> {
             this.loadTask()
         });
         this.router.addRoute("/about",()=>{
@@ -21,10 +22,11 @@ export class App extends Component {
         });
         this.nav = new Navbar(this.router)
         this.appRoot = document.createElement('div')
-        this.appRoot.appendChild(this.nav.mount())
-        this.appRoot.appendChild(this.taskForm.mount())
-        this.appRoot.appendChild(this.taskList.mount())
+        this.router.handleRoute()
         this.loaded = true;
+        if (store) {
+            store.subscribe(() => this.update());
+        }
     }
 
     loadTask(){

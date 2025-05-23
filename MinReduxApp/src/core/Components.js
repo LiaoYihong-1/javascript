@@ -1,14 +1,9 @@
-import {store} from "../store/store";
-
 export class Component {
     constructor(props = {}) {
         this.props = props;
         this.state = {};
         this.element = null;
         this.children = [];
-        if (store) {
-            this.unsubscribe = store.subscribe(() => this.update());
-        }
     }
 
     setState(newState) {
@@ -17,7 +12,7 @@ export class Component {
     }
 
     createElement(tag, attributes = {}, children = []) {
-        const element = document.createElement(tag);
+        let element = document.createElement(tag);
 
         // 设置属性
         Object.entries(attributes).forEach(([key, value]) => {
@@ -64,7 +59,7 @@ export class Component {
     }
 
     update() {
-        const oldElement = this.element;
+        let oldElement = this.element;
         this.element = this.render();
         if (oldElement && oldElement.parentNode) {
             oldElement.parentNode.replaceChild(this.element, oldElement);

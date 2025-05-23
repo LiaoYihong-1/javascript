@@ -6,6 +6,9 @@ export class TaskForm extends Component {
     constructor() {
         super();
         this.state = { inputValue: '' };
+        if (store) {
+            store.subscribe(() => this.update());
+        }
     }
 
     handleSubmit(e) {
@@ -13,11 +16,15 @@ export class TaskForm extends Component {
         if (this.state.inputValue.trim()) {
             store.dispatch(addTask(this.state.inputValue));
         }
+        localStorage.setItem('tasks', JSON.stringify(store.getState().tasks.tasks));
+
     }
 
     render() {
         return this.createElement('form', {
-            onSubmit: (e) => this.handleSubmit(e),
+            onSubmit: (e) => {
+                this.handleSubmit(e)
+            },
             style: {
                 display: 'flex',
                 marginBottom: '20px'

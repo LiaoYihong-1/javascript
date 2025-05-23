@@ -16,7 +16,6 @@ export function tasksReducer(state = initialState, action) {
                 completed: false
             };
             const newTasksAdd = [...state.tasks, newTask];
-            localStorage.setItem('tasks', JSON.stringify(newTasksAdd));
             return { ...state, tasks: newTasksAdd };
 
         case DELETE_TASK:
@@ -30,7 +29,6 @@ export function tasksReducer(state = initialState, action) {
                     ? { ...task, text: action.payload.newText }
                     : task
             );
-            localStorage.setItem('tasks', JSON.stringify(newTasksEdit));
             return { ...state, tasks: newTasksEdit };
 
         case TOGGLE_TASK:
@@ -39,7 +37,6 @@ export function tasksReducer(state = initialState, action) {
                     ? { ...task, completed: !task.completed }
                     : task
             );
-            localStorage.setItem('tasks', JSON.stringify(newTasksToggle));
             return { ...state, tasks: newTasksToggle };
 
         default:

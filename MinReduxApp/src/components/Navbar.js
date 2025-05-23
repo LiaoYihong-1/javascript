@@ -1,9 +1,13 @@
 import { Component } from '../core/Components';
+import {store} from "../store/store";
 
 export class Navbar extends Component {
     constructor(router) {
         super();
         this.router = router
+        if (store) {
+            store.subscribe(() => this.update());
+        }
     }
 
     render() {

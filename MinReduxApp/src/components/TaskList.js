@@ -6,6 +6,9 @@ export class TaskList extends Component {
     constructor() {
         super();
         this.state = { editingId: null, editText: '' };
+        if (store) {
+            store.subscribe(() => this.update());
+        }
     }
 
     handleEdit(task) {
@@ -43,7 +46,10 @@ export class TaskList extends Component {
                             this.createElement('input', {
                                 type: 'checkbox',
                                 checked: task.completed,
-                                onChange: () => store.dispatch(toggleTask(task.id)),
+                                onChange: () => {
+                                    store.dispatch(toggleTask(task.id))
+                                    localStorage.setItem('tasks', JSON.stringify(store.getState().tasks.tasks));
+                                },
                                 style: { marginRight: '10px' }
                             }),
 
@@ -51,7 +57,9 @@ export class TaskList extends Component {
                                 ? this.createElement('input', {
                                     type: 'text',
                                     value: this.state.editText,
-                                    onChange: (e) => this.setState({ editText: e.target.value }),
+                                    onChange: (e) => {
+                                        this.setState({ editText: e.target.value })
+                                    },
                                     style: { flexGrow: 1, marginRight: '10px', padding: '5px' }
                                 })
                                 : this.createElement('span', {
@@ -64,7 +72,10 @@ export class TaskList extends Component {
 
                             isEditing
                                 ? this.createElement('button', {
-                                    onClick: () => this.handleSave(task.id),
+                                    onClick: () => {
+                                        this.handleSave(task.id)
+                                        localStorage.setItem('tasks', JSON.stringify(store.getState().tasks.tasks));
+                                    },
                                     style: {
                                         backgroundColor: '#4CAF50',
                                         color: 'white',
@@ -89,7 +100,10 @@ export class TaskList extends Component {
                                 }, ['Edit']),
 
                             this.createElement('button', {
-                                onClick: () => store.dispatch(deleteTask(task.id)),
+                                onClick: () => {
+                                    store.dispatch(deleteTask(task.id))
+                                    localStorage.setItem('tasks', JSON.stringify(store.getState().tasks.tasks));
+                                },
                                 style: {
                                     backgroundColor: '#f44336',
                                     color: 'white',
